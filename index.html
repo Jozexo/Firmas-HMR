@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Firmas - Hotel Margarita Real</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Generador de Firmas Corporativas</h1>
+            <p>Hotel Margarita Real - Vacation Club</p>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Ingresa tus datos</h2>
+                <form id="signature-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nombre">Nombre y Apellido:</label>
+                            <input type="text" id="nombre" name="nombre" required placeholder="Ej: María González">
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo">Cargo/Puesto:</label>
+                            <input type="text" id="cargo" name="cargo" required placeholder="Ej: Recepcionista">
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo Electrónico:</label>
+                            <input type="email" id="correo" name="correo" required placeholder="Ej: recepcion@margaritareal.com.ve">
+                        </div>
+                        <div class="form-group">
+                            <label for="extension">Extensión:</label>
+                            <input type="text" id="extension" name="extension" required placeholder="Ej: 1234">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-generar">
+                        <span class="icon">🔄</span> Generar Firma
+                    </button>
+                </form>
+            </section>
+
+            <section class="preview-section">
+                <h2>Vista Previa</h2>
+                <div class="preview-container">
+                    <div id="signature-preview" class="signature-preview">
+                        <div class="firma-logo-container">
+                            <img src="img/logo-main-white-r.png" alt="Logo Hotel Margarita Real" class="firma-logo">
+                        </div>
+                        <div class="firma-contenido">
+                            <div class="firma-nombre">Nombre Apellido | <span class="firma-cargo">Cargo</span></div>
+                            <div class="firma-email">correo@margaritareal.com.ve</div>
+                            <div class="firma-telefono">TELEF: +58 0295-5001300 | Ext: 0000</div>
+                            <div class="firma-web"><a href="https://www.hotelmargaritareal.com">www.hotelmargaritareal.com</a></div>
+                            <div class="firma-direccion">Av. Aldonza Manrique, Final Calle Camarón, Hotel Margarita Real.Ofic. Admin. 
+Pampatar, Edo. Nueva Esparta. Venezuela 6316</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="btn-descargar-png" class="btn-descargar" disabled>
+                        <span class="icon">🖼️</span> Descargar PNG
+                    </button>
+                    <button id="btn-descargar-jpg" class="btn-descargar" disabled>
+                        <span class="icon">🖼️</span> Descargar JPG
+                    </button>
+                    <button id="btn-descargar-html" class="btn-descargar" disabled>
+                        <span class="icon">💾</span> Descargar HTML
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© <span id="year">2025</span> Hotel Margarita Real - Vacation Club. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
