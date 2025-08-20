@@ -36,10 +36,26 @@
                             <label for="extension">Extensión:</label>
                             <input type="text" id="extension" name="extension" required placeholder="Ej: 1234">
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono Móvil (opcional):</label>
+                            <div class="telefono-container">
+                                <select id="codigo" class="codigo-telefono">
+                                    <option value="">Código</option>
+                                    <option value="0412">0412</option>
+                                    <option value="0414">0414</option>
+                                    <option value="0416">0416</option>
+                                    <option value="0424">0424</option>
+                                    <option value="0426">0426</option>
+                                </select>
+                                <span class="separador">-</span>
+                                <input type="text" id="numero" name="numero" placeholder="0000000" maxlength="7" class="numero-telefono">
+                            </div>
+                            <input type="hidden" id="telefono" name="telefono">
+                        </div>
+                    </div> 
                     <button type="submit" class="btn-generar">
                         <img src="img/icon/sync.svg" alt="Generar" class="icono-btn"> Generar Firma
-                    </button>
+                    </button> 
                 </form>
             </section>
 
@@ -53,7 +69,7 @@
                         <div class="firma-contenido">
                             <div class="firma-nombre">Nombre Apellido <span class="barra-nombrecargo">|</span> <span class="firma-cargo">Cargo</span></div>
                             <div class="firma-email">correo@margaritareal.com.ve</div>
-                            <div class="firma-telefono">TELEF: +58 0295-5001300 | Ext: 0000</div>
+                            <div class="firma-telefono">Ofic: +58 0295-5001300 <span class="firma-movil"> Telf: 0424-0000000</span> | Ext: 0000</div>
                             <div class="firma-web"><a href="https://www.hotelmargaritareal.com">www.hotelmargaritareal.com</a></div>
                             <div class="firma-direccion">Av. Aldonza Manrique, Final Calle Camarón, Hotel Margarita Real.Ofic. Admin. 
 Pampatar, Edo. Nueva Esparta. Venezuela 6316</div>

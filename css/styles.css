@@ -119,6 +119,7 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
+    align-items: end; /* Alinea todos los elementos al fondo */
 }
 
 .form-group {
@@ -145,6 +146,49 @@ main {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(0, 142, 150, 0.2);
+}
+
+.telefono-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.codigo-telefono {
+    width: 80px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    height: 42px;
+    background-color: white;
+}
+
+.numero-telefono {
+    flex: auto;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    height: 42px;
+}
+
+.separador {
+    color: #777;
+    font-weight: bold;
+}
+
+.firma-telefono-personal {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--primary-color-light);
+}
+
+.firma-telefono-oficina {
+    font-size: 11px;
+    color: var(--primary-color-light);
+    font-weight: bold;
+
 }
 
 button {
@@ -375,10 +419,6 @@ footer p {
     .firma-logo-container {
         width: 100%;
         height: 80px;
-    }
-    
-    .button-group {
-        flex-direction: column;
     }
     
     button {

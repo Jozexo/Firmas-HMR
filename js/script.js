@@ -10,6 +10,9 @@ const nombreInput = document.getElementById('nombre');
 const cargoInput = document.getElementById('cargo');
 const correoInput = document.getElementById('correo');
 const extensionInput = document.getElementById('extension');
+const codigoInput = document.getElementById('codigo');
+const numeroInput = document.getElementById('numero');
+const telefonoInput = document.getElementById('telefono'); // Este es el hidden input
 const previewContainer = document.getElementById('signature-preview');
 const btnDescargarPng = document.getElementById('btn-descargar-png');
 const btnDescargarJpg = document.getElementById('btn-descargar-jpg');
@@ -21,7 +24,35 @@ btnDescargarPng.addEventListener('click', () => descargarImagen('png'));
 btnDescargarJpg.addEventListener('click', () => descargarImagen('jpg'));
 btnDescargarHtml.addEventListener('click', descargarFirmaHtml);
 
-// Función para generar la firma
+// Event listeners para el campo de teléfono
+codigoInput.addEventListener('change', actualizarTelefonoCompleto);
+numeroInput.addEventListener('input', validarNumeroTelefono);
+
+// Función para validar el número de teléfono
+function validarNumeroTelefono() {
+    // Validar que solo sean números
+    this.value = this.value.replace(/\D/g, '');
+    
+    // Limitar a 7 dígitos
+    if (this.value.length > 7) {
+        this.value = this.value.slice(0, 7);
+    }
+    
+    actualizarTelefonoCompleto();
+}
+
+// Función para actualizar el teléfono completo
+function actualizarTelefonoCompleto() {
+    const codigo = codigoInput.value;
+    const numero = numeroInput.value.trim();
+    
+    if (codigo && numero && numero.length === 7) {
+        telefonoInput.value = `${codigo}-${numero}`;
+    } else {
+        telefonoInput.value = '';
+    }
+}
+
 // Función para generar la firma (con spinner)
 function generarFirma(e) {
     e.preventDefault();
@@ -31,10 +62,11 @@ function generarFirma(e) {
     const cargo = cargoInput.value.trim();
     const correo = correoInput.value.trim();
     const extension = extensionInput.value.trim();
+    const telefono = telefonoInput.value.trim(); // Este viene del hidden input
     
-    // Validar que todos los campos estén llenos
+    // Validar solo los campos obligatorios (teléfono es opcional)
     if (!nombre || !cargo || !correo || !extension) {
-        alert('Por favor, complete todos los campos');
+        alert('Por favor, complete los campos obligatorios');
         return;
     }
     
@@ -48,6 +80,12 @@ function generarFirma(e) {
     const generarFirmaAsync = () => {
         return new Promise((resolve) => {
             setTimeout(() => {
+                // Generar HTML de la firma con teléfono condicional
+                let telefonoHTML = '';
+                if (telefono) {
+                    telefonoHTML = `<div class="firma-telefono-personal">Móvil: ${telefono}</div>`;
+                }
+                
                 const firmaHTML = `
                     <div class="firma-logo-container">
                         <img src="img/logo-main-white-r.png" alt="Logo Hotel Margarita Real" class="firma-logo">
@@ -55,7 +93,8 @@ function generarFirma(e) {
                     <div class="firma-contenido">
                         <div class="firma-nombre">${nombre} <span class="barra-nombrecargo">|</span> <span class="firma-cargo">${cargo}</span></div>
                         <div class="firma-email">${correo}</div>
-                        <div class="firma-telefono">TELEF: +58 0295-5001300 | Ext: ${extension}</div>
+                        ${telefonoHTML}
+                        <div class="firma-telefono-oficina">Ofic: +58 0295-5001300 | Ext: ${extension}</div>
                         <div class="firma-web"><a href="https://www.hotelmargaritareal.com">www.hotelmargaritareal.com</a></div>
                         <div class="firma-direccion">Av. Aldonza Manrique, Final Calle Camarón, Hotel Margarita Real.Ofic. Admin. 
                 Pampatar, Edo. Nueva Esparta. Venezuela 6316</div>
@@ -159,7 +198,9 @@ function descargarImagen(formato) {
                 resolve(canvas);
             })
             .catch(error => {
-                document.body.removeChild(exportContainer);
+                if (document.body.contains(exportContainer)) {
+                    document.body.removeChild(exportContainer);
+                }
                 reject(error);
             });
         });
@@ -207,12 +248,31 @@ function descargarFirmaHtml() {
     btnDescargarHtml.disabled = true;
     
     const nombre = nombreInput.value.trim().replace(/\s+/g, '_');
+    const telefono = telefonoInput.value.trim();
     
     // Función asíncrona para generar HTML
     const generarHtmlAsync = () => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const firmaHTML = previewContainer.innerHTML;
+                let telefonoHTML = '';
+                if (telefono) {
+                    telefonoHTML = `<div class="firma-telefono-personal">Móvil: ${telefono}</div>`;
+                }
+                
+                const firmaConTelefono = `
+                    <div class="firma-logo-container">
+                        <img src="img/logo-main-white-r.png" alt="Logo Hotel Margarita Real" class="firma-logo">
+                    </div>
+                    <div class="firma-contenido">
+                        <div class="firma-nombre">${nombreInput.value} <span class="barra-nombrecargo">|</span> <span class="firma-cargo">${cargoInput.value}</span></div>
+                        <div class="firma-email">${correoInput.value}</div>
+                        ${telefonoHTML}
+                        <div class="firma-telefono-oficina">Ofic: +58 0295-5001300 | Ext: ${extensionInput.value}</div>
+                        <div class="firma-web"><a href="https://www.hotelmargaritareal.com">www.hotelmargaritareal.com</a></div>
+                        <div class="firma-direccion">Av. Aldonza Manrique, Final Calle Camarón, Hotel Margarita Real.Ofic. Admin. 
+                Pampatar, Edo. Nueva Esparta. Venezuela 6316</div>
+                    </div>
+                `;
                 
                 // Crear contenido del archivo
                 const contenido = `
@@ -221,12 +281,84 @@ function descargarFirmaHtml() {
 <head>
     <meta charset="UTF-8">
     <style>
-        /* Tus estilos CSS aquí */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .firma-container {
+            display: flex;
+            width: 567px;
+            height: 128px;
+            font-family: Arial, sans-serif;
+        }
+        .firma-logo-container {
+            width: 200px;
+            height: 128px;
+            background-color: #008e96;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .firma-logo {
+            max-width: 95%;
+            max-height: 90%;
+            filter: brightness(0) invert(1);
+        }
+        .firma-contenido {
+            padding: 10px 15px;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .firma-nombre {
+            font-weight: bold;
+            font-size: 14px;
+            color: #008e96;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        .firma-cargo {
+            font-size: 12px;
+            color: #777777;
+            text-transform: uppercase;
+        }
+        .firma-email {
+            color: #00b5ba;
+            font-weight: bold;
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+        .firma-telefono-personal {
+            font-size: 11px;
+            color: #333;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+        .firma-telefono-oficina {
+            font-size: 11px;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .firma-web {
+            font-size: 11px;
+            color: #00b5ba;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .firma-web a {
+            color: #00b5ba;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .firma-direccion {
+            font-size: 11px;
+            color: #333;
+            line-height: 1.3;
+        }
     </style>
 </head>
 <body>
-    <div style="width: 567px; height: 128px;">
-        ${firmaHTML}
+    <div class="firma-container">
+        ${firmaConTelefono}
     </div>
 </body>
 </html>`;
@@ -263,3 +395,9 @@ function descargarFirmaHtml() {
             alert('Error al generar el HTML. Por favor, intente nuevamente.');
         });
 }
+
+// Inicializar
+document.addEventListener('DOMContentLoaded', function() {
+    // Año actual en el footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+});
