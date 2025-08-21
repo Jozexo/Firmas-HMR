@@ -264,7 +264,10 @@ button:disabled {
 .preview-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    width: 100%;
 }
 
 .signature-preview {
@@ -278,21 +281,37 @@ button:disabled {
     padding: 0;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .export-container {
     position: absolute;
     left: -9999px;
     top: -9999px;
+    width: 567px !important;
+    height: 128px !important;
     z-index: -1000;
 }
 
 .signature-export {
+    width: 567px !important;
+    height: 128px !important;
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
-    width: 567px !important;
+    transform: none !important;
+    min-width: unset !important;
+    max-width: unset !important;
+}
+
+.signature-export .firma-logo-container {
+    width: 200px !important;
     height: 128px !important;
+}
+
+.signature-export .firma-contenido {
+    padding: 15px !important;
+    font-size: 12px !important;
 }
 
 .firma-logo-container {
@@ -408,12 +427,15 @@ footer p {
     .form-grid {
         grid-template-columns: 1fr;
     }
-    
+
+    .preview-container {
+        justify-content: center;
+    }
+
     .signature-preview {
-        flex-direction: column;
-        height: auto;
-        width: 100%;
-        max-width: 400px;
+        transform: scale(0.95);
+        margin: 10px 0;
+        min-width: unset;
     }
     
     .firma-logo-container {
@@ -423,6 +445,12 @@ footer p {
     
     button {
         width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .signature-preview {
+        transform: scale(0.85);
     }
 }
 
@@ -441,6 +469,10 @@ footer p {
     
     .firma-contenido {
         padding: 12px;
+        font-size: 11px;
+    }
+    .signature-preview {
+        transform: scale(0.8);
     }
 }
 
