@@ -28,6 +28,20 @@ btnDescargarHtml.addEventListener('click', descargarFirmaHtml);
 codigoInput.addEventListener('change', actualizarTelefonoCompleto);
 numeroInput.addEventListener('input', validarNumeroTelefono);
 
+extensionInput.addEventListener('input', validarExtension);
+
+function validarExtension() {
+    // Validar que solo sean números
+    this.value = this.value.replace(/\D/g, '');
+
+    // Limitar a 4 dígitos
+    if (this.value.length > 4) {
+        this.value = this.value.slice(0, 4);
+    }
+    
+    actualizarExtension();
+}
+
 // Función para validar el número de teléfono
 function validarNumeroTelefono() {
     // Validar que solo sean números
@@ -83,7 +97,7 @@ function generarFirma(e) {
                 // Generar HTML de la firma con teléfono condicional
                 let telefonoHTML = '';
                 if (telefono) {
-                    telefonoHTML = `<div class="firma-telefono-personal">Móvil: ${telefono}</div>`;
+                    telefonoHTML = `Telf: ${telefono}`;
                 }
                 
                 const firmaHTML = `
@@ -93,8 +107,11 @@ function generarFirma(e) {
                     <div class="firma-contenido">
                         <div class="firma-nombre">${nombre} <span class="barra-nombrecargo">|</span> <span class="firma-cargo">${cargo}</span></div>
                         <div class="firma-email">${correo}</div>
-                        ${telefonoHTML}
-                        <div class="firma-telefono-oficina">Ofic: +58 0295-5001300 | Ext: ${extension}</div>
+                        <div class="firma-telefono-personal">
+                            Ofic: +58 0295-5001300
+                            ${telefono ? '' + telefonoHTML : ''}
+                            Ext : ${extension}
+                        </div>
                         <div class="firma-web"><a href="https://www.hotelmargaritareal.com">www.hotelmargaritareal.com</a></div>
                         <div class="firma-direccion">Av. Aldonza Manrique, Final Calle Camarón, Hotel Margarita Real.Ofic. Admin. 
                 Pampatar, Edo. Nueva Esparta. Venezuela 6316</div>
@@ -267,7 +284,7 @@ function descargarFirmaHtml() {
                         <div class="firma-nombre">${nombreInput.value} <span class="barra-nombrecargo">|</span> <span class="firma-cargo">${cargoInput.value}</span></div>
                         <div class="firma-email">${correoInput.value}</div>
                         ${telefonoHTML}
-                        <div class="firma-telefono-oficina">Ofic: +58 0295-5001300 | Ext: ${extensionInput.value}</div>
+                        <div class="firma-telefono-oficina">Ofic: +58 0295-5001300 Ext: ${extensionInput.value}</div>
                         <div class="firma-web"><a href="https://www.hotelmargaritareal.com">www.hotelmargaritareal.com</a></div>
                         <div class="firma-direccion">Av. Aldonza Manrique, Final Calle Camarón, Hotel Margarita Real.Ofic. Admin. 
                 Pampatar, Edo. Nueva Esparta. Venezuela 6316</div>
