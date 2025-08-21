@@ -16,13 +16,13 @@ const telefonoInput = document.getElementById('telefono'); // Este es el hidden 
 const previewContainer = document.getElementById('signature-preview');
 const btnDescargarPng = document.getElementById('btn-descargar-png');
 const btnDescargarJpg = document.getElementById('btn-descargar-jpg');
-const btnDescargarHtml = document.getElementById('btn-descargar-html');
+// const btnDescargarHtml = document.getElementById('btn-descargar-html');
 
 // Event Listeners
 form.addEventListener('submit', generarFirma);
 btnDescargarPng.addEventListener('click', () => descargarImagen('png'));
 btnDescargarJpg.addEventListener('click', () => descargarImagen('jpg'));
-btnDescargarHtml.addEventListener('click', descargarFirmaHtml);
+// btnDescargarHtml.addEventListener('click', descargarFirmaHtml);
 
 // Event listeners para el campo de teléfono
 codigoInput.addEventListener('change', actualizarTelefonoCompleto);
@@ -131,7 +131,7 @@ function generarFirma(e) {
             // Habilitar botones de descarga
             btnDescargarPng.disabled = false;
             btnDescargarJpg.disabled = false;
-            btnDescargarHtml.disabled = false;
+            // btnDescargarHtml.disabled = false;
             
             // Marcar que ya se generó una firma
             firmaGenerada = true;
