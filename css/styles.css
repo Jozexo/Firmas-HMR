@@ -444,6 +444,12 @@ footer p {
     }
 }
 
+.icon-perfil {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
 /* Iconos para botones */
 .icon {
     width: 16px;
